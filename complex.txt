@@ -1,0 +1,88 @@
+1)	WRITE A SQL STATEMENT TO DISPLAY THE LOWEST PAID EMPLOYEE'S (NAME , SALARY , DEPARTMENT NAME).
+
+mysql> select e.first_name, e.last_name, e.salary, d.department_name from employees e INNER JOIN departments d ON e.department_id = d.department_id order by salary limit 1;
+
+2)	LIST MINIMUM SALARY FOR EACH DEPARTMENT.
+
+mysql> select department_id, min(salary) from employees group by dapartment_id;
+
+
+
+
+3)	WRITE A QUERY  BASED ON  FOLLOWING RESULT. 
+
+mysql> select e.employee_id, e.first_name, e.job_id, e.salary, e.department_id, d.department_name from employees e INNER JOIN departments d ON 
+e.department_id = d.department_id group by d.department_name;
+
+4)	LIST ALL THE EMPLOYEES WHO ARE WORKING IN FORD’S DEPARTMENT.
+
+mysql> select * from employees where department_id=(select department_id from employees where first_name='amt');
+
+
+5)	LIST ALL EMPLOYEE WHO ARE WORKING IN WARD'S DEPARTMENT AND EARNING MORE THEN MARTIN.
+
+mysql> select e.*, d.department_name from employees e INNER JOIN departments d ON e.department_id = d.department_id where 
+d.department_name = 'sales' AND e.salary>(select salary from employees where last_name = 'patel');
+
+6)	DISPLAY EMPLOYEE NUMBER, NAME,DEPT NUMBER, DEPT NAME, AND LOCATION.
+
+mysql> select e.employee_id, e.first_name, e.department_id, d.department_name, l.location_id, l.street_address from employees e 
+INNER JOIN departments d INNER JOIN locations l ON e.department_id = d.department_id AND d.location_id =l.location_id;
+
+7)	DISPLAY THE FOLLOWING RESULT.
+
+mysql> select e.first_name, e.department_id, d.department_name from employees e INNER JOIN departments d ON e.department_id = d.department_id;
+
+8)	LIST ALL THE EMPLOYEE WHO ARE WORKING IN NEW YORK.
+
+mysql> select e.first_name, e.department_id, d.department_name, l.street_address from employees e INNER JOIN departments d ON
+ e.department_id = d.department_id INNER JOIN locations l ON d.location_id =l.location_id where city = 'London';
+
+9)	WRITE A SQL STATEMENT TO DISPLAY THE LOWEST PAID EMPLOYEE'S (NAME , SALARY , DEPARTMENT NAME) IN THE RESPECTIVE DEPARTMENT.
+
+mysql> select e.first_name, min(e.salary), d.dapartment_name from employees e INNER JOIN departments d ON e.department_id = d.department_id;
+
+10)	WRITE A SQL STATEMENT TO DISPLAY THE HIGHEST PAID EMPLOYEE'S (NAME, JOB, MANAGER NAME, SALARY AND DEPARTMENT NAME AND DEPARTMENT NO.) IN THE RESPECTIVE DEPARTMENT.
+
+mysql> select e.first_name, e.job_id, max(e.salary), e.department_id, d.department_name from employees e INNER JOIN departments d ON 
+e.department_id = d.department_id group by d.department_name;
+
+11)	WRITE A SQL STATEMENT TO DISPLAY THE EMPLOYEE NAME (BOSS) AND NUMBER OF EMPLOYEE (SUBORDINATES) DIRECTLY REPORTING TO HIM?.
+
+mysql> select first_name as BOSS, COUNT(employee_id) as SUBORDINATES from employees e group by manager_id;
+
+12)	DISPLAY THE NAMES, DESIGNATION AND SALARIES OF ALL EMPLOYEES WHO HAVE MANAGER ALONG WITH MANAGER'S NAME, DESIGNATION AND MANAGER'S SALARY.
+	(SELF-JOIN).
+
+mysql> select min(salary) from employees where salary <> (select min(salary) from empoyee);
+
+13)	CREATE THE FOLLOWING TABLES:
+        ORDER: {ID, ORDERDATE, ORDERNUMBER}
+        ORDER_ITEM: {ID, ORDERID, PRODUCTID, UNITPRICE, QUANTITY}
+        PRODUCT: {ID, PRODUCTNAME}
+        WRITE A QUERY TO DISPLAY THE FOLLOWING OUTPUT SORTED BY ORDER NO:
+
+mysql> select o.ID, o.ORDERDATE, o.ORDERNUMBER, oi.ORDERID, oi.PRODUCTID, oi.UNITPRICE, oi.QUANTITY, p.PRODUCTNAME
+    -> from ORDER o inner join ORDER_ITEM oi  ON o.ID = oi.ID inner join PRODUCT p ON oi.ID = p.ID GROUP BY o.ORDERNUMBER;
+
+
+
+14)	 FIND THE 2ND MINIMUM SALARY OF THE EMPLOYEE.
+
+ANS     mysql> select min(salary) from employees where salary <> (select min(salary) from empoyee);
+
+15)	 FIND THE MAX 3 SALARIES FROM EMPLOYEE TABLE.
+
+ANS     mysql> select max(salary) from employees order by salary desc limit 3;
+
+16)	 DISPLAY COMMON RECORDS FROM EMP_1 & EMP_2 TABLES. (USE INTERSECT)
+
+mysql> select * from employees where employees.department_id = departments.department_id INTERSECT(select * from departments);
+
+17)	 DISPLAY DEPARTMENT NO WISE TOTAL SALARY WHERE MORE THAN 2 EMPLOYEES EXIST IN A DEPARTMENT.
+
+mysql> select department_id. sum(salary) from employees GROUP BY department_id having count(employee_id)>2;
+
+
+
+
